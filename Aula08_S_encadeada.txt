@@ -1,0 +1,125 @@
+import java.util.Scanner;
+
+class Nodo {
+    int info;
+    Nodo prox;
+
+    public Nodo(int valor) {
+        this.info = valor;
+        this.prox = null;
+    }
+}
+
+class ListaSimplesEnc {
+    private Nodo prim;
+
+    // Cria a lista vazia
+    public ListaSimplesEnc() {
+        this.prim = null;
+    }
+
+    // Verifica se a lista está vazia
+    public boolean estaVazia() {
+        return prim == null;
+    }
+
+    // Insere elemento no início
+    public void inserirIni(int v) {
+        Nodo novo = new Nodo(v);
+        novo.prox = prim;
+        prim = novo;
+    }
+
+    // Remove o primeiro elemento
+    public void removerIni() {
+        if (!estaVazia()) {
+            prim = prim.prox;
+        } else {
+            System.out.println("Lista vazia!");
+        }
+    }
+
+    // Insere elemento em ordem (lista crescente)
+    public void inserirOrd(int v) {
+        Nodo novo = new Nodo(v);
+
+        if (prim == null || v < prim.info) {
+            // insere no início
+            novo.prox = prim;
+            prim = novo;
+        } else {
+            Nodo pAnt = null;
+            Nodo pAtu = prim;
+
+            while (pAtu != null && pAtu.info < v) {
+                pAnt = pAtu;
+                pAtu = pAtu.prox;
+            }
+
+            // insere entre pAnt e pAtu
+            pAnt.prox = novo;
+            novo.prox = pAtu;
+        }
+    }
+
+    // Mostrar lista
+    public void mostrarLista() {
+        Nodo p = prim;
+        while (p != null) {
+            System.out.print(p.info + "\t");
+            p = p.prox;
+        }
+        System.out.println();
+    }
+}
+
+public class MainLista {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ListaSimplesEnc minhaLista = new ListaSimplesEnc();
+        int op, valor;
+
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1 - Inserir elemento no início");
+            System.out.println("2 - Inserir elemento em ordem");
+            System.out.println("3 - Remover elemento no início");
+            System.out.println("4 - Mostrar lista");
+            System.out.println("5 - Sair");
+            System.out.print("Opção? ");
+
+            op = sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    System.out.print("Valor? ");
+                    valor = sc.nextInt();
+                    minhaLista.inserirIni(valor);
+                    break;
+                case 2:
+                    System.out.print("Valor? ");
+                    valor = sc.nextInt();
+                    minhaLista.inserirOrd(valor);
+                    break;
+                case 3:
+                    minhaLista.removerIni();
+                    break;
+                case 4:
+                    if (minhaLista.estaVazia()) {
+                        System.out.println("Lista vazia!");
+                    } else {
+                        System.out.println("Elementos da lista:");
+                        minhaLista.mostrarLista();
+                    }
+                    break;
+                case 5:
+                    System.out.println("Encerrando...");
+                    sc.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+}
