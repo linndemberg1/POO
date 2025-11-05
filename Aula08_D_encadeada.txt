@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+class Nodo {
+    int info;
+    Nodo ant;  // anterior
+    Nodo prox; // próximo
+
+    public Nodo(int valor) {
+        this.info = valor;
+        this.ant = null;
+        this.prox = null;
+    }
+}
+
+public class ListaDupla {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Nodo inicio = null;  // início da lista
+        Nodo tmp, p;
+        int v;
+
+        while (true) {
+            System.out.print("\nValor? ");
+            v = sc.nextInt();
+
+            if (v == 0) break; // encerra inserções
+
+            // cria um novo nodo
+            tmp = new Nodo(v);
+
+            if (inicio == null) {
+                // lista vazia
+                inicio = tmp;
+            } else {
+                // percorre a lista até o final ou até achar um igual
+                p = inicio;
+                while (p.prox != null && p.info != v) {
+                    p = p.prox;
+                }
+
+                if (p.info != v) {
+                    // insere no final
+                    p.prox = tmp;
+                    tmp.ant = p;
+                } else {
+                    System.out.println("Valor " + v + " já existe na lista. Ignorado.");
+                }
+            }
+        }
+
+        // mostra a lista do início ao fim
+        System.out.println("\nConteúdo da lista:");
+        p = inicio;
+        while (p != null) {
+            System.out.print(p.info + "\t");
+            p = p.prox;
+        }
+        System.out.println();
+
+        sc.close();
+    }
+}
