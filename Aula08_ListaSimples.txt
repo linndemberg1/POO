@@ -1,0 +1,33 @@
+package br.com;
+
+//Lista Simplesmente Encadeada
+class No {
+ int valor;
+ No prox;
+
+ No(int valor) {
+     this.valor = valor;
+     this.prox = null;
+ }
+}
+
+public class ListaSimples {
+ public static void main(String[] args) {
+     // Criação dos nós
+     No n1 = new No(10);
+     No n2 = new No(20);
+     No n3 = new No(30);
+
+     // Encadeamento manual
+     n1.prox = n2;
+     n2.prox = n3;
+
+     // Percorrendo e exibindo
+     No atual = n1;
+     System.out.println("Lista Encadeada Simples:");
+     while (atual != null) {
+         System.out.print(atual.valor + " ");
+         atual = atual.prox;
+     }
+ }
+}

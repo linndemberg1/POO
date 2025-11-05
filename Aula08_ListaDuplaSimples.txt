@@ -1,0 +1,44 @@
+package br.com;
+
+//Lista Duplamente Encadeada
+class Nodo {
+ int valor;
+ Nodo ant;
+ Nodo prox;
+
+ Nodo(int valor) {
+     this.valor = valor;
+     this.ant = null;
+     this.prox = null;
+ }
+}
+
+public class ListaDuplaSimples {
+ public static void main(String[] args) {
+     Nodo n1 = new Nodo(5);
+     Nodo n2 = new Nodo(15);
+     Nodo n3 = new Nodo(25);
+
+     // Encadeamento duplo
+     n1.prox = n2;
+     n2.ant = n1;
+     n2.prox = n3;
+     n3.ant = n2;
+
+     // Percurso direto
+     System.out.println("Percorrendo do início ao fim:");
+     Nodo atual = n1;
+     while (atual != null) {
+         System.out.print(atual.valor + " ");
+         atual = atual.prox;
+     }
+
+     // Percurso reverso
+     System.out.println("\n\nPercorrendo do fim ao início:");
+     atual = n3;
+     while (atual != null) {
+         System.out.print(atual.valor + " ");
+         atual = atual.ant;
+     }
+ }
+}
