@@ -1,0 +1,195 @@
+### PILHAS ###
+#EXEMPLO 1 — Pilha simples com Stack
+import java.util.Stack;
+
+public class PilhaExemplo1 {
+    public static void main(String[] args) {
+        // Cria uma pilha de inteiros
+        Stack<Integer> pilha = new Stack<>();
+
+        // Adiciona elementos (empilha)
+        pilha.push(10);
+        pilha.push(20);
+        pilha.push(30);
+
+        System.out.println("Pilha atual: " + pilha);
+
+        // Remove o último elemento inserido (desempilha)
+        int removido = pilha.pop();
+        System.out.println("Elemento removido: " + removido);
+
+        // Consulta o topo da pilha (sem remover)
+        System.out.println("Topo da pilha: " + pilha.peek());
+        System.out.println("Pilha final: " + pilha);
+    }
+}
+
+#EXEMPLO 2 — Verificando expressões com parênteses
+import java.util.Stack;
+
+public class PilhaExemplo2 {
+    public static boolean verificarExpressao(String expressao) {
+        Stack<Character> pilha = new Stack<>();
+
+        for (char c : expressao.toCharArray()) {
+            if (c == '(') {
+                pilha.push(c);
+            } else if (c == ')') {
+                if (pilha.isEmpty()) {
+                    return false; // fecha sem abrir
+                }
+                pilha.pop();
+            }
+        }
+
+        return pilha.isEmpty(); // se sobrar algo, está incorreto
+    }
+
+    public static void main(String[] args) {
+        String exp1 = "(2 + 3) * (5 - 1)";
+        String exp2 = "(2 + 3 * (4 - 1)";
+
+        System.out.println(exp1 + " -> " + verificarExpressao(exp1));
+        System.out.println(exp2 + " -> " + verificarExpressao(exp2));
+    }
+}
+
+#EXEMPLO 3 — Pilha de navegação
+import java.util.Stack;
+
+public class PilhaExemplo3 {
+    public static void main(String[] args) {
+        Stack<String> historico = new Stack<>();
+
+        // Acessando páginas
+        historico.push("Página inicial");
+        historico.push("Notícias");
+        historico.push("Artigos");
+        historico.push("Contato");
+
+        System.out.println("Histórico atual: " + historico);
+
+        // Voltando uma página
+        String paginaAnterior = historico.pop();
+        System.out.println("Voltando de: " + paginaAnterior);
+        System.out.println("Página atual: " + historico.peek());
+    }
+}
+
+
+### FILAS ###
+#Exemplo 4 — Fila simples com LinkedList: 
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class FilaExemplo1 {
+    public static void main(String[] args) {
+        // Cria uma fila de strings
+        Queue<String> fila = new LinkedList<>();
+
+        // Adiciona elementos na fila
+        fila.add("João");
+        fila.add("Maria");
+        fila.add("Pedro");
+
+        System.out.println("Fila inicial: " + fila);
+
+        // Remove o primeiro elemento (FIFO)
+        String removido = fila.remove();
+        System.out.println("Removido: " + removido);
+        System.out.println("Fila após remoção: " + fila);
+
+        // Consulta o próximo elemento sem remover
+        String primeiro = fila.peek();
+        System.out.println("Próximo da fila (peek): " + primeiro);
+    }
+}
+
+#Exemplo 5 — Fila de inteiros com verificação de tamanho fixo:
+
+public class FilaArray {
+    private int[] fila;
+    private int tamanho;
+    private int inicio;
+    private int fim;
+
+    public FilaArray(int capacidade) {
+        fila = new int[capacidade];
+        tamanho = 0;
+        inicio = 0;
+        fim = -1;
+    }
+
+    // Adiciona elemento na fila
+    public void enfileirar(int valor) {
+        if (tamanho == fila.length) {
+            System.out.println("Fila cheia!");
+            return;
+        }
+        fim = (fim + 1) % fila.length;
+        fila[fim] = valor;
+        tamanho++;
+    }
+
+    // Remove elemento da fila
+    public int desenfileirar() {
+        if (tamanho == 0) {
+            System.out.println("Fila vazia!");
+            return -1;
+        }
+        int valor = fila[inicio];
+        inicio = (inicio + 1) % fila.length;
+        tamanho--;
+        return valor;
+    }
+
+    public void exibir() {
+        System.out.print("Fila: ");
+        for (int i = 0; i < tamanho; i++) {
+            System.out.print(fila[(inicio + i) % fila.length] + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        FilaArray fila = new FilaArray(5);
+        fila.enfileirar(10);
+        fila.enfileirar(20);
+        fila.enfileirar(30);
+        fila.exibir();
+
+        fila.desenfileirar();
+        fila.exibir();
+    }
+}
+
+#Exemplo 6 — Fila de atendimento:
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Pessoa {
+    String nome;
+
+    Pessoa(String nome) {
+        this.nome = nome;
+    }
+}
+
+public class FilaAtendimento {
+    public static void main(String[] args) {
+        Queue<Pessoa> filaAtendimento = new LinkedList<>();
+
+        filaAtendimento.add(new Pessoa("Ana"));
+        filaAtendimento.add(new Pessoa("Bruno"));
+        filaAtendimento.add(new Pessoa("Carlos"));
+
+        System.out.println("=== Início do atendimento ===");
+        while (!filaAtendimento.isEmpty()) {
+            Pessoa atendida = filaAtendimento.remove();
+            System.out.println("Atendendo: " + atendida.nome);
+        }
+        System.out.println("=== Fila vazia ===");
+    }
+}
