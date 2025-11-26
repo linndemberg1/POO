@@ -1,0 +1,125 @@
+1) EXEMPLO DE ÁRVORE (BST)
+Problema:
+
+Inserir os valores 8, 3, 10, 1, 6 em uma Árvore Binária de Busca e exibir o percurso em-ordem (que deve produzir valores ordenados).
+
+Código Java (Árvore BST + Em-Ordem):
+
+class No {
+    int valor;
+    No esquerdo, direito;
+
+    No(int valor) {
+        this.valor = valor;
+        esquerdo = direito = null;
+    }
+}
+
+class ArvoreBST {
+    No raiz;
+
+    // Inserção recursiva
+    No inserir(No raiz, int valor) {
+        if (raiz == null) return new No(valor);
+        if (valor < raiz.valor)
+            raiz.esquerdo = inserir(raiz.esquerdo, valor);
+        else
+            raiz.direito = inserir(raiz.direito, valor);
+        return raiz;
+    }
+
+    // Em-ordem
+    void emOrdem(No raiz) {
+        if (raiz != null) {
+            emOrdem(raiz.esquerdo);
+            System.out.print(raiz.valor + " ");
+            emOrdem(raiz.direito);
+        }
+    }
+}
+
+public class ExemploArvore {
+    public static void main(String[] args) {
+
+        ArvoreBST arvore = new ArvoreBST();
+
+        int[] valores = {8, 3, 10, 1, 6};
+
+        for (int v : valores)
+            arvore.raiz = arvore.inserir(arvore.raiz, v);
+
+        System.out.print("Percurso em-ordem: ");
+        arvore.emOrdem(arvore.raiz);
+    }
+}
+
+
+2) EXEMPLO DE TÉCNICA DE PESQUISA
+Problema:
+
+Buscar o número 7 no vetor {2, 4, 7, 9, 13} usando Pesquisa Binária.
+
+Código Java (Pesquisa Binária):
+
+public class PesquisaBinaria {
+
+    public static int buscaBinaria(int[] v, int x) {
+        int inicio = 0, fim = v.length - 1;
+
+        while (inicio <= fim) {
+            int meio = (inicio + fim) / 2;
+
+            if (v[meio] == x) return meio;
+            if (x < v[meio])
+                fim = meio - 1;
+            else
+                inicio = meio + 1;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] vetor = {2, 4, 7, 9, 13};
+        int elemento = 7;
+
+        int pos = buscaBinaria(vetor, elemento);
+
+        if (pos != -1)
+            System.out.println("Elemento encontrado na posição: " + pos);
+        else
+            System.out.println("Elemento não encontrado");
+    }
+}
+
+
+3) EXEMPLO DE TÉCNICA DE ORDENAÇÃO
+Problema:
+
+Ordenar o vetor {5, 1, 4, 2, 8} usando Insertion Sort.
+
+Código Java (Insertion Sort):
+public class InsertionSortExemplo {
+
+    public static void insertionSort(int[] v) {
+        for (int i = 1; i < v.length; i++) {
+            int chave = v[i];
+            int j = i - 1;
+
+            while (j >= 0 && v[j] > chave) {
+                v[j + 1] = v[j];
+                j--;
+            }
+            v[j + 1] = chave;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] vetor = {5, 1, 4, 2, 8};
+
+        insertionSort(vetor);
+
+        System.out.print("Vetor ordenado: ");
+        for (int n : vetor)
+            System.out.print(n + " ");
+    }
+}
